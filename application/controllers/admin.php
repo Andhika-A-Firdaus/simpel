@@ -73,7 +73,7 @@ class Admin extends CI_Controller {
 		
 		/* pagination */	
 		$total_row		= $this->db->query("SELECT * FROM t_surat_masuk")->num_rows();
-		$per_page		= 10;
+		$per_page		= 1;
 		
 		$awal	= $this->uri->segment(4); 
 		$awal	= (empty($awal) || $awal == 1) ? 0 : $awal;
@@ -146,7 +146,7 @@ class Admin extends CI_Controller {
 			$this->session->set_flashdata("k", "<div class=\"alert alert-success\" id=\"alert\">Data has been updated. ".$this->upload->display_errors()."</div>");			
 			redirect('admin/surat_masuk');
 		} else {
-			$a['data']		= $this->db->query("SELECT * FROM t_surat_masuk LIMIT $awal, $akhir ")->result();
+			$a['data']		= $this->db->query("SELECT * FROM t_surat_msk LIMIT $awal, $akhir ")->result();
 			$a['page']		= "l_surat_masuk";
 		}
 		
@@ -523,13 +523,13 @@ class Admin extends CI_Controller {
 	}
 	
 	public function do_login() {
-		$u 		= $this->security->xss_clean($this->input->post('u'));
-		$ta 	= $this->security->xss_clean($this->input->post('ta'));
-        $p 		= md5($this->security->xss_clean($this->input->post('p')));
+            $u 		= $this->security->xss_clean($this->input->post('u'));
+            $ta 	= $this->security->xss_clean($this->input->post('ta'));
+            $p 		= md5($this->security->xss_clean($this->input->post('p')));
          
-		$q_cek	= $this->db->query("SELECT * FROM t_admin WHERE username = '".$u."' AND password = '".$p."'");
-		$j_cek	= $q_cek->num_rows();
-		$d_cek	= $q_cek->row();
+            $q_cek	= $this->db->query("SELECT * FROM t_admin WHERE username = '".$u."' AND password = '".$p."'");
+            $j_cek	= $q_cek->num_rows();
+            $d_cek	= $q_cek->row();
 		//echo $this->db->last_query();
 		
         if($j_cek == 1) {

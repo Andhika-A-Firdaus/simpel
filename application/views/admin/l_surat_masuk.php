@@ -42,11 +42,20 @@
 <table class="table table-bordered table-hover">
 	<thead>
 		<tr>
-			<th width="10%">No. Agd/Kode</th>
+			<!--<th width="10%">No. Agd/Kode</th>
 			<th width="27%">Isi Ringkas, File</th>
 			<th width="25%">Asal Surat</th>
 			<th width="15%">Nomor, Tgl. Surat</th>
 			<th width="23%">Aksi</th>
+                        -->
+                        <th width="10%">No. Agenda/File</th>
+			<th width="8%">No./Tanggal Surat</th>
+			<th width="20%">Pengirim/Perihal</th>
+			<th width="8%">Tanggal Terima/Tenggat</th>
+                        <th width="20%">Keterangan</th>
+                        <th width="5%">Terkirim</th>
+                        <th width="5%">By </th>
+			<th width="24%">Aksi</th>
 		</tr>
 	</thead>
 	
@@ -59,14 +68,17 @@
 			foreach ($data as $b) {
 		?>
 		<tr>
-			<td><?php echo $b->no_agenda."/".$b->kode;?></td>
-			<td><?=$b->isi_ringkas."<br><b>File : </b><i><a href='".base_URL()."upload/surat_masuk/".$b->file."' target='_blank'>".$b->file."</a>"?></td>
-			<td><?=$b->dari?></td>
-			<td><?=$b->no_surat."<br><i>".tgl_jam_sql($b->tgl_surat)."</i>"?></td>
+			<td><?php echo $b->no_agenda."<br><b>File : </b><i><a href='".base_URL()."upload/surat_masuk/".$b->file."' target='_blank'>".$b->file."</a>";?></td>
+			<td><?=$b->nomor_surat."<br>".tgl_jam_sql($b->tgl_srt)?></td>
+			<td><?=$b->pengirim."<br>".$b->perihal?></td>
+                        <td><?=tgl_jam_sql($b->tgl_srt_diterima)."<br>".tgl_jam_sql($b->tgl_srt_dtlanjut)?></td>
+			<td><?=$b->keterangan?></td>
+                        <td><?=$b->status_terkirim?></td>
+                        <td><?=$b->keterangan?></td>
 			
 			<td class="ctr">
 				<?php  
-				if ($b->pengolah == $this->session->userdata('admin_id')) {
+				if ($b->edited_by == $this->session->userdata('admin_id')) {
 				?>
 				<div class="btn-group">
 					<a href="<?=base_URL()?>admin/surat_masuk/edt/<?=$b->id?>" class="btn btn-success btn-sm" title="Edit Data"><i class="icon-edit icon-white"> </i> Edt</a>
