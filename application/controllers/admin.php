@@ -122,18 +122,18 @@ class Admin extends CI_Controller {
 			$this->session->set_flashdata("k", "<div class=\"alert alert-success\" id=\"alert\">Data has been deleted </div>");
 			redirect('admin/surat_masuk');
 		} else if ($mau_ke == "cari") {
-			$a['data']		= $this->db->query("SELECT * FROM t_srt_masuk WHERE perihal LIKE '%$cari%' ORDER BY id DESC")->result();
+			$a['data']		= $this->db->query("SELECT * FROM t_surat_msk WHERE perihal LIKE '%$cari%' ORDER BY id DESC")->result();
 			$a['page']		= "l_surat_masuk";
 		} else if ($mau_ke == "add") {
 			$a['page']		= "f_surat_masuk";
 		} else if ($mau_ke == "edt") {
-			$a['datpil']	= $this->db->query("SELECT * FROM t_srt_masuk WHERE id = '$idu'")->row();	
+			$a['datpil']	= $this->db->query("SELECT * FROM t_surat_msk WHERE id = '$idu'")->row();	
 			$a['page']		= "f_surat_masuk";
 		} else if ($mau_ke == "act_add") {	
 			if ($this->upload->do_upload('file_surat')) {
 				$up_data	 	= $this->upload->data();
 				
-				$this->db->query("INSERT INTO t_srt_masuk "
+				$this->db->query("INSERT INTO t_surat_msk "
                                         . "(nomor_surat, tgl_srt, tgl_srt_diterima, "
                                         . "tgl_srt_dtlanjut, tenggat_wkt, perihal, "
                                         . "jenis_surat, no_agenda, unit_tujuan, "
@@ -145,7 +145,7 @@ class Admin extends CI_Controller {
                                         . "'$keterangan', '".$this->session->userdata('admin_id')."', '$status_terkirim', "
                                         . "'".$up_data['file_name']."', '$pengirim') ");
                         } else {
-				$this->db->query("INSERT INTO t_srt_masuk "
+				$this->db->query("INSERT INTO t_surat_msk "
                                         . "(nomor_surat, tgl_srt, tgl_srt_diterima, "
                                         . "tgl_srt_dtlanjut, tenggat_wkt, perihal, "
                                         . "jenis_surat, no_agenda, unit_tujuan, "
@@ -165,7 +165,7 @@ class Admin extends CI_Controller {
 			if ($this->upload->do_upload('file_surat')) {
 				$up_data	 	= $this->upload->data();
 							
-				$this->db->query("UPDATE t_srt_masuk "
+				$this->db->query("UPDATE t_surat_msk "
                                         . "SET nomor_surat = '$nomor_surat', tgl_srt = '$tgl_srt', "
                                         . "tgl_srt_diterima = '$tgl_srt_diterima', "
                                         . "tgl_srt_dtlanjut = '$tgl_srt_dtlanjut', tenggat_wkt = '$tenggat_wkt', "
@@ -176,7 +176,7 @@ class Admin extends CI_Controller {
                                         . "edited_by = '".$this->session->userdata('admin_id')."'"
                                         . "WHERE id = '$idp'");
 			} else {
-				$this->db->query("UPDATE t_srt_masuk "
+				$this->db->query("UPDATE t_surat_msk "
                                         . "SET nomor_surat = '$nomor_surat', tgl_srt = '$tgl_srt', "
                                         . "tgl_srt_diterima = '$tgl_srt_diterima', "
                                         . "tgl_srt_dtlanjut = '$tgl_srt_dtlanjut', tenggat_wkt = '$tenggat_wkt', "

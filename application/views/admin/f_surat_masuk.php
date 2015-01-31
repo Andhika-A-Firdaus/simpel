@@ -68,10 +68,10 @@ if ($mode == "edt" || $mode == "act_edt") {
 	<div class="col-lg-6">
 		<table  class="table-form">
 		<tr><td width="20%">No. Surat</td><td><b><input type="text" name="nomor_surat" required value="<?php echo $nomor_surat; ?>" style="width: 100px" class="form-control"></b></td></tr><tr>
-		<tr><td width="20%">Tanggal Surat</td><td><b><input type="text" name="tgl_surat" required value="<?php echo $tgl_srt; ?>" id="tgl_srt" style="width: 100px" class="form-control"></b></td></tr>
-                <tr><td width="20%">Tanggal Surat Diterima</td><td><b><input type="text" name="tgl_srt_diterima" required value="<?php echo $tgl_srt_diterima; ?>" id="tgl_srt_diterima" style="width: 100px" class="form-control"></b></td></tr>
-                <tr><td width="20%">Tanggal Waktu Untuk Ditindaklanjuti </td><td><b><input type="text" name="tgl_srt_dtlanjut" required value="<?php echo $tgl_srt_dtlanjut; ?>" id="tgl_srt_dtlanjut" style="width: 100px" class="form-control"></b></td></tr>
-                <tr><td width="20%">Tenggat </td><td><b><input type="checkbox" name="tenggat_wkt"  value="<?php echo $tenggat_wkt; ?>" id="tenggat_wkt" style="width: 100px" class="form-control"></b></td></tr>
+		<tr><td width="20%">Tanggal Surat</td><td><b><input type="text" name="tgl_srt" required value="<?php echo $tgl_srt; ?>" id="tgl_surat" style="width: 100px" class="form-control"></b></td></tr>
+                <tr><td width="20%">Tanggal Surat Diterima</td><td><b><input type="text" name="tgl_srt_diterima" required value="<?php echo $tgl_srt_diterima; ?>" id="tgl_surat" style="width: 100px" class="form-control"></b></td></tr>
+                <tr><td width="20%">Tanggal Waktu Untuk Ditindaklanjuti </td><td><b><input type="text" name="tgl_srt_dtlanjut" required value="<?php echo $tgl_srt_dtlanjut; ?>" id="tgl_surat" style="width: 100px" class="form-control"></b></td></tr>
+                <tr><td width="20%">Tenggat </td><td><b><input type="checkbox" name="tenggat_wkt"  value="<?php echo $tenggat_wkt; ?>" id="tgl_surata" style="width: 100px" class="form-control"></b></td></tr>
                 
                 <tr><td colspan="2">
 		<br><button type="submit" class="btn btn-primary">Simpan</button>
@@ -82,13 +82,12 @@ if ($mode == "edt" || $mode == "act_edt") {
 	
 	<div class="col-lg-6">	
 		<table  class="table-form">
-		<tr><td width="20%">Perihal</td><td><b><input type="text" name="kode" id="perihal" required value="<?php echo $perihal; ?>" style="width: 100px" class="form-control"></b></td></tr>
 		<tr><td width="20%">Jenis Surat</td><td><b><input type="text" name="jenis_surat" required value="<?php echo $jenis_surat; ?>" style="width: 300px" class="form-control"></b></td></tr>
 		<tr><td width="20%">No Agenda</td><td><b><input type="text" name="no_agenda" required value="<?php echo $no_agenda; ?>" id="no_agenda" style="width: 100px" class="form-control"></b></td></tr>
 		<tr><td width="20%">Perihal</td><td><b><input type="text" name="perihal" id="perihal" required value="<?php echo $perihal; ?>" style="width: 100px" class="form-control"></b></td></tr>
 		<tr><td width="20%">Unit Tujuan</td><td><b><input type="text" name="unit_tujuan" required value="<?php echo $unit_tujuan; ?>" style="width: 300px" class="form-control"></b></td></tr>
 		<tr><td width="20%">File Surat (Scan)</td><td><b><input type="file" name="file_surat" class="form-control" style="width: 200px"></b></td></tr>
-		<tr><td width="20%">Keterangan</td><td><b><input type="text" name="ket" required value="<?php echo $keterangan; ?>" style="width: 400px" class="form-control"></b></td></tr>	
+		<tr><td width="20%">Keterangan</td><td><b><input type="text" name="keterangan" required value="<?php echo $keterangan; ?>" style="width: 400px" class="form-control"></b></td></tr>	
 		</table>	
 	</div>
 
