@@ -22,10 +22,10 @@ class Admin extends CI_Controller {
 		
 		/* pagination */	
 		$total_row		= $this->db->query("SELECT * FROM ref_klasifikasi")->num_rows();
-		$per_page		= 10;
+		$per_page		= 2     ;
 		
 		$awal	= $this->uri->segment(4); 
-		$awal	= (empty($awal) || $awal == 1) ? 0 : $awal;
+		$awal	= (empty($awal)) ? 0 : $awal;
 		
 		//if (empty($awal) || $awal == 1) { $awal = 0; } { $awal = $awal; }
 		$akhir	= $per_page;
@@ -72,11 +72,11 @@ class Admin extends CI_Controller {
 		}
 		
 		/* pagination */	
-		$total_row		= $this->db->query("SELECT * FROM t_surat_masuk")->num_rows();
+		$total_row		= $this->db->query("SELECT * FROM t_surat_msk")->num_rows();
 		$per_page		= 1;
 		
 		$awal	= $this->uri->segment(4); 
-		$awal	= (empty($awal) || $awal == 1) ? 0 : $awal;
+		$awal	= (empty($awal)) ? 0 : $awal;
 		
 		//if (empty($awal) || $awal == 1) { $awal = 0; } { $awal = $awal; }
 		$akhir	= $per_page;
@@ -91,14 +91,20 @@ class Admin extends CI_Controller {
 
 		//ambil variabel Postingan
 		$idp					= addslashes($this->input->post('idp'));
+		$nomor_surat				= addslashes($this->input->post('nomor_surat'));
+		$tgl_srt                              = addslashes($this->input->post('tgl_surat'));
+		$tgl_srt_diterima			= addslashes($this->input->post('tgl_srt_diterima'));
+		$tgl_srt_dtlanjut			= addslashes($this->input->post('tgl_srt_dtlanjut'));
+		$tenggat_wkt				= addslashes($this->input->post('tenggat_wkt'));
+		$perihal				= addslashes($this->input->post('perihal'));
+		$jenis_surat				= addslashes($this->input->post('jenis_surat'));
 		$no_agenda				= addslashes($this->input->post('no_agenda'));
-		$indek_berkas			= addslashes($this->input->post('indek_berkas'));
-		$kode					= addslashes($this->input->post('kode'));
-		$dari					= addslashes($this->input->post('dari'));
-		$no_surat				= addslashes($this->input->post('no_surat'));
-		$tgl_surat				= addslashes($this->input->post('tgl_surat'));
-		$uraian					= addslashes($this->input->post('uraian'));
-		$ket					= addslashes($this->input->post('ket'));
+		$unit_tujuan				= addslashes($this->input->post('unit_tujuan'));
+		$keterangan				= addslashes($this->input->post('keterangan'));
+		$edited_by				= addslashes($this->input->post('edited_by'));
+		$status_terkirim			= addslashes($this->input->post('status_terkirim'));
+		$file					= addslashes($this->input->post('file'));
+		$pengirim				= addslashes($this->input->post('pengirim'));
 		
 		$cari					= addslashes($this->input->post('q'));
 
@@ -112,25 +118,46 @@ class Admin extends CI_Controller {
 		$this->load->library('upload', $config);
 		
 		if ($mau_ke == "del") {
-			$this->db->query("DELETE FROM t_surat_masuk WHERE id = '$idu'");
+			$this->db->query("DELETE FROM t_surat_msk WHERE id = '$idu'");
 			$this->session->set_flashdata("k", "<div class=\"alert alert-success\" id=\"alert\">Data has been deleted </div>");
 			redirect('admin/surat_masuk');
 		} else if ($mau_ke == "cari") {
-			$a['data']		= $this->db->query("SELECT * FROM t_surat_masuk WHERE isi_ringkas LIKE '%$cari%' ORDER BY id DESC")->result();
+			$a['data']		= $this->db->query("SELECT * FROM t_srt_masuk WHERE perihal LIKE '%$cari%' ORDER BY id DESC")->result();
 			$a['page']		= "l_surat_masuk";
 		} else if ($mau_ke == "add") {
 			$a['page']		= "f_surat_masuk";
 		} else if ($mau_ke == "edt") {
-			$a['datpil']	= $this->db->query("SELECT * FROM t_surat_masuk WHERE id = '$idu'")->row();	
+			$a['datpil']	= $this->db->query("SELECT * FROM t_srt_masuk WHERE id = '$idu'")->row();	
 			$a['page']		= "f_surat_masuk";
 		} else if ($mau_ke == "act_add") {	
 			if ($this->upload->do_upload('file_surat')) {
 				$up_data	 	= $this->upload->data();
 				
-				$this->db->query("INSERT INTO t_surat_masuk VALUES (NULL, '$kode', '	$no_agenda', '$indek_berkas', '$uraian', '$dari', '$no_surat', '$tgl_surat', NOW(), '$ket', '".$up_data['file_name']."', '".$this->session->userdata('admin_id')."')");
-			} else {
-				$this->db->query("INSERT INTO t_surat_masuk VALUES (NULL, '$kode', '$no_agenda', '$indek_berkas', '$uraian', '$dari', '$no_surat', '$tgl_surat', NOW(), '$ket', '', '".$this->session->userdata('admin_id')."')");
-			}	
+				$this->db->query("INSERT INTO t_srt_masuk "
+                                        . "(nomor_surat, tgl_srt, tgl_srt_diterima, "
+                                        . "tgl_srt_dtlanjut, tenggat_wkt, perihal, "
+                                        . "jenis_surat, no_agenda, unit_tujuan, "
+                                        . "keterangan, edited_by, status_terkirim, "
+                                        . "file, pengirim) "
+                                        . "VALUES ('$nomor_surat', '$tgl_srt', '$tgl_srt_diterima', "
+                                        . "'$tgl_srt_dtlanjut', '$tenggat_wkt', '$perihal', "
+                                        . "'$jenis_surat', '$no_agenda', '$unit_tujuan', "
+                                        . "'$keterangan', '".$this->session->userdata('admin_id')."', '$status_terkirim', "
+                                        . "'".$up_data['file_name']."', '$pengirim') ");
+                        } else {
+				$this->db->query("INSERT INTO t_srt_masuk "
+                                        . "(nomor_surat, tgl_srt, tgl_srt_diterima, "
+                                        . "tgl_srt_dtlanjut, tenggat_wkt, perihal, "
+                                        . "jenis_surat, no_agenda, unit_tujuan, "
+                                        . "keterangan, edited_by, status_terkirim, "
+                                        . "file, pengirim) "
+                                        . "VALUES ('$nomor_surat', '$tgl_srt', '$tgl_srt_diterima', "
+                                        . "'$tgl_srt_dtlanjut', '$tenggat_wkt', '$perihal', "
+                                        . "'$jenis_surat', '$no_agenda', '$unit_tujuan', "
+                                        . "'$keterangan', '".$this->session->userdata('admin_id')."', '$status_terkirim', "
+                                        . "'$pengirim') ");
+                                
+                        }	
 			
 			$this->session->set_flashdata("k", "<div class=\"alert alert-success\" id=\"alert\">Data has been added. ".$this->upload->display_errors()."</div>");
 			redirect('admin/surat_masuk');
@@ -138,10 +165,29 @@ class Admin extends CI_Controller {
 			if ($this->upload->do_upload('file_surat')) {
 				$up_data	 	= $this->upload->data();
 							
-				$this->db->query("UPDATE t_surat_masuk SET kode = '$kode', no_agenda = '$no_agenda', indek_berkas = '$indek_berkas', isi_ringkas = '$uraian', dari = '$dari', no_surat = '$no_surat', tgl_surat = '$tgl_surat', keterangan = '$ket', file = '".$up_data['file_name']."' WHERE id = '$idp'");
+				$this->db->query("UPDATE t_srt_masuk "
+                                        . "SET nomor_surat = '$nomor_surat', tgl_srt = '$tgl_srt', "
+                                        . "tgl_srt_diterima = '$tgl_srt_diterima', "
+                                        . "tgl_srt_dtlanjut = '$tgl_srt_dtlanjut', tenggat_wkt = '$tenggat_wkt', "
+                                        . "perihal = '$perihal', jenis_surat = '$jenis_surat', "
+                                        . "no_agenda = '$no_agenda', file = '".$up_data['file_name']."', "
+                                        . "unit_tujuan = '$unit_tujuan', keterangan = '$keterangan', "
+                                        . "status_terkirim = '$status_terkirim', pengirim = '$pengirim', "
+                                        . "edited_by = '".$this->session->userdata('admin_id')."'"
+                                        . "WHERE id = '$idp'");
 			} else {
-				$this->db->query("UPDATE t_surat_masuk SET kode = '$kode', no_agenda = '$no_agenda', indek_berkas = '$indek_berkas', isi_ringkas = '$uraian', dari = '$dari', no_surat = '$no_surat', tgl_surat = '$tgl_surat', keterangan = '$ket' WHERE id = '$idp'");
-			}	
+				$this->db->query("UPDATE t_srt_masuk "
+                                        . "SET nomor_surat = '$nomor_surat', tgl_srt = '$tgl_srt', "
+                                        . "tgl_srt_diterima = '$tgl_srt_diterima', "
+                                        . "tgl_srt_dtlanjut = '$tgl_srt_dtlanjut', tenggat_wkt = '$tenggat_wkt', "
+                                        . "perihal = '$perihal', jenis_surat = '$jenis_surat', "
+                                        . "no_agenda = '$no_agenda',  "
+                                        . "unit_tujuan = '$unit_tujuan', keterangan = '$keterangan', "
+                                        . "status_terkirim = '$status_terkirim', pengirim = '$pengirim', "
+                                        . "edited_by = '".$this->session->userdata('admin_id')."'"
+                                        . "WHERE id = '$idp'");
+                                
+                        }	
 			
 			$this->session->set_flashdata("k", "<div class=\"alert alert-success\" id=\"alert\">Data has been updated. ".$this->upload->display_errors()."</div>");			
 			redirect('admin/surat_masuk');

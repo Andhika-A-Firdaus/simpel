@@ -5,7 +5,7 @@ $mode		= $this->uri->segment(3);
 
 if ($mode == "edt" || $mode == "act_edt") {
 	$act		= "act_edt";
-	$idp		= $datpil->id;
+	/*$idp		= $datpil->id;
 	$no_agenda	= $datpil->no_agenda;
 	$indek_berkas= $datpil->indek_berkas;
 	$kode		= $datpil->kode;
@@ -15,18 +15,39 @@ if ($mode == "edt" || $mode == "act_edt") {
 
 	$uraian		= $datpil->isi_ringkas;
 	$ket		= $datpil->keterangan;
+        */
+        $idp			= $datpil->id;
+        $nomor_surat		= $datpil->nomor_surat;
+        $tgl_srt                = $datpil->tgl_srt;
+        $tgl_srt_diterima	= $datpil->tgl_srt_diterima;
+        $tgl_srt_dtlanjut	= $datpil->tgl_srt_dtlanjut;
+        $tenggat_wkt		= $datpil->tenggat_wkt;
+        $perihal		= $datpil->perihal;
+        $jenis_surat		= $datpil->jenis_surat;
+        $no_agenda		= $datpil->no_agenda;
+        $unit_tujuan		= $datpil->unit_tujuan;
+        $keterangan		= $datpil->keterangan;
+        $edited_by		= $datpil->edited_by;
+        $status_terkirim	= $datpil->status_terkirim;
+        //$file			= $datpil->file;
+        //$pengirim		= $datpil->pengirim;
+
 	
 } else {
 	$act			= "act_add";
-	$idp			= "";
-	$no_agenda		= "";
-	$indek_berkas	="";
-	$kode			= "";
-	$dari			= "";
-	$no_surat		= "";
-	$tgl_surat		= "";
-	$uraian			= "";
-	$ket			= "";
+        $idp			= "";
+        $nomor_surat		= "";
+        $tgl_srt                = "";
+        $tgl_srt_diterima	= "";
+        $tgl_srt_dtlanjut	= "";
+        $tenggat_wkt		= "";
+        $perihal		= "";
+        $jenis_surat		= "";
+        $no_agenda		= "";
+        $unit_tujuan		= "";
+        $keterangan		= "";
+        $edited_by		= "";
+        $status_terkirim	= "";
 }
 ?>
 <div class="navbar navbar-inverse">
@@ -44,17 +65,15 @@ if ($mode == "edt" || $mode == "act_edt") {
 	
 	
 	<div class="row-fluid well" style="overflow: hidden">
-		
 	<div class="col-lg-6">
 		<table  class="table-form">
-		<tr>
-		  <td width="20%">No. Agenda</td><td><b><input type="text" name="no_agenda" required value="<?php echo $no_agenda; ?>" style="width: 100px" class="form-control"></b></td></tr>
-		<tr>
-		  <td width="20%">Pengirim</td><td><b><input type="text" name="dari" required value="<?php echo $dari; ?>" id="dari" style="width: 400px" class="form-control"></b></td></tr>		
-		<tr><td width="20%">Nomor Surat</td><td><b><input type="text" name="no_surat" required value="<?php echo $no_surat; ?>" style="width: 300px" class="form-control"></td></tr>	
-		<tr>
-		  <td width="20%">Perihal</td><td><b><textarea name="uraian" required style="width: 400px; height: 90px" class="form-control"><?php echo $uraian; ?></textarea></b></td></tr>	
-		<tr><td colspan="2">
+		<tr><td width="20%">No. Surat</td><td><b><input type="text" name="nomor_surat" required value="<?php echo $nomor_surat; ?>" style="width: 100px" class="form-control"></b></td></tr><tr>
+		<tr><td width="20%">Tanggal Surat</td><td><b><input type="text" name="tgl_surat" required value="<?php echo $tgl_srt; ?>" id="tgl_srt" style="width: 100px" class="form-control"></b></td></tr>
+                <tr><td width="20%">Tanggal Surat Diterima</td><td><b><input type="text" name="tgl_srt_diterima" required value="<?php echo $tgl_srt_diterima; ?>" id="tgl_srt_diterima" style="width: 100px" class="form-control"></b></td></tr>
+                <tr><td width="20%">Tanggal Waktu Untuk Ditindaklanjuti </td><td><b><input type="text" name="tgl_srt_dtlanjut" required value="<?php echo $tgl_srt_dtlanjut; ?>" id="tgl_srt_dtlanjut" style="width: 100px" class="form-control"></b></td></tr>
+                <tr><td width="20%">Tenggat </td><td><b><input type="checkbox" name="tenggat_wkt"  value="<?php echo $tenggat_wkt; ?>" id="tenggat_wkt" style="width: 100px" class="form-control"></b></td></tr>
+                
+                <tr><td colspan="2">
 		<br><button type="submit" class="btn btn-primary">Simpan</button>
 		<a href="<?=base_URL()?>admin/surat_masuk" class="btn btn-success">Kembali</a>
 		</td></tr>
@@ -63,11 +82,13 @@ if ($mode == "edt" || $mode == "act_edt") {
 	
 	<div class="col-lg-6">	
 		<table  class="table-form">
-		<tr><td width="20%">Kode Klasifikasi</td><td><b><input type="text" name="kode" id="kode_surat" required value="<?php echo $kode; ?>" style="width: 100px" class="form-control"></b></td></tr>
-		<tr><td width="20%">Indeks Berkas</td><td><b><input type="text" name="indek_berkas" required value="<?php echo $indek_berkas; ?>" style="width: 300px" class="form-control"></b></td></tr>
-		<tr><td width="20%">Tanggal Surat</td><td><b><input type="text" name="tgl_surat" required value="<?php echo $tgl_surat; ?>" id="tgl_surat" style="width: 100px" class="form-control"></b></td></tr>
+		<tr><td width="20%">Perihal</td><td><b><input type="text" name="kode" id="perihal" required value="<?php echo $perihal; ?>" style="width: 100px" class="form-control"></b></td></tr>
+		<tr><td width="20%">Jenis Surat</td><td><b><input type="text" name="jenis_surat" required value="<?php echo $jenis_surat; ?>" style="width: 300px" class="form-control"></b></td></tr>
+		<tr><td width="20%">No Agenda</td><td><b><input type="text" name="no_agenda" required value="<?php echo $no_agenda; ?>" id="no_agenda" style="width: 100px" class="form-control"></b></td></tr>
+		<tr><td width="20%">Perihal</td><td><b><input type="text" name="perihal" id="perihal" required value="<?php echo $perihal; ?>" style="width: 100px" class="form-control"></b></td></tr>
+		<tr><td width="20%">Unit Tujuan</td><td><b><input type="text" name="unit_tujuan" required value="<?php echo $unit_tujuan; ?>" style="width: 300px" class="form-control"></b></td></tr>
 		<tr><td width="20%">File Surat (Scan)</td><td><b><input type="file" name="file_surat" class="form-control" style="width: 200px"></b></td></tr>
-		<tr><td width="20%">Keterangan</td><td><b><input type="text" name="ket" required value="<?php echo $ket; ?>" style="width: 400px" class="form-control"></b></td></tr>	
+		<tr><td width="20%">Keterangan</td><td><b><input type="text" name="ket" required value="<?php echo $keterangan; ?>" style="width: 400px" class="form-control"></b></td></tr>	
 		</table>	
 	</div>
 
