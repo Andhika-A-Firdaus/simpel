@@ -524,7 +524,8 @@ class Admin extends CI_Controller {
 	public function disposisi_cetak() {
 		$idu = $this->uri->segment(3);
 		$a['datpil1']	= $this->db->query("SELECT * FROM t_surat_masuk WHERE id = '$idu'")->row();	
-		$a['datpil2']	= $this->db->query("SELECT * FROM t_disposisi WHERE id = '$idu'")->result();	
+		$a['datpil2']	= $this->db->query("SELECT * FROM t_disposisi WHERE id = '$idu'")->result();
+                $a['datpil3']	= $this->db->query("SELECT * FROM t_disposisi WHERE id = '$idu'")->row();
 		$this->load->view('admin/f_disposisi', $a);
 	}
 	

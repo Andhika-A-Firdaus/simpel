@@ -20,10 +20,11 @@ $q_instansi	= $this->db->query("SELECT * FROM tr_instansi LIMIT 1")->row();
 </style>
 </head>
 
-<body onload="window.print()">
+<body onLoad="window.print()">
 <table>
-	<tr><td colspan="3">
-	<h3>KEMENTERIAN AGAMA</h3>
+	<tr><td colspan="3" align="center">
+	<h3>KEMENTERIAN KELAUTAN DAN PERIKANAN</h3>
+    <h3>SEKRETARIAT JENDERAL</h3>
 	<h2><?php echo $q_instansi->nama; ?></h2>
 	Alamat : <?php echo $q_instansi->alamat; ?>	
 	</td>
@@ -36,7 +37,7 @@ $q_instansi	= $this->db->query("SELECT * FROM tr_instansi LIMIT 1")->row();
 	<tr><td><b>Isi Ringkas</b></td><td colspan="2">: <?php echo $datpil1->isi_ringkas; ?></td></tr>
 	<tr><td><b>Diterima Tanggal</b></td><td colspan="2">: <?php echo tgl_jam_sql($datpil1->tgl_diterima); ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>No. Agenda &nbsp;&nbsp; </b> ( <?php echo $datpil1->no_agenda; ?> ) </td></tr>
 	<tr><td colspan="3"><b>Tanggal Penyelesaian </b>: </td></tr>
-	<tr><td style="height: 350px" valign="top" colspan="2"><b>Isi Disposisi :  
+	<tr><td style="height: 350px" valign="top" colspan="2"><b>Isi Disposisi :  <?php echo $datpil3->isi_disposisi; ?>
 	
 	</b></td><td valign="top" width="50%" style="border-left: solid 1px">
 	Diteruskan kepada  : 
