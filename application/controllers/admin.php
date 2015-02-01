@@ -92,7 +92,7 @@ class Admin extends CI_Controller {
 		//ambil variabel Postingan
 		$idp					= addslashes($this->input->post('idp'));
 		$nomor_surat				= addslashes($this->input->post('nomor_surat'));
-		$tgl_srt                              = addslashes($this->input->post('tgl_surat'));
+		$tgl_srt                              = addslashes($this->input->post('tgl_srt'));
 		$tgl_srt_diterima			= addslashes($this->input->post('tgl_srt_diterima'));
 		$tgl_srt_dtlanjut			= addslashes($this->input->post('tgl_srt_dtlanjut'));
 		$tenggat_wkt				= addslashes($this->input->post('tenggat_wkt'));
@@ -154,7 +154,7 @@ class Admin extends CI_Controller {
                                         . "tgl_srt_dtlanjut, tenggat_wkt, perihal, "
                                         . "jenis_surat, no_agenda, unit_tujuan, "
                                         . "keterangan, edited_by, status_terkirim, "
-                                        . "file, pengirim) "
+                                        . "pengirim) "
                                         . "VALUES ('$nomor_surat', '$tgl_srt', '$tgl_srt_diterima', "
                                         . "'$tgl_srt_dtlanjut', '$tenggat_wkt', '$perihal', "
                                         . "'$jenis_surat', '$no_agenda', '$unit_tujuan', "

@@ -9,7 +9,7 @@ if ($mode == "edt" || $mode == "act_edt") {
 	$no_agenda	= $datpil->no_agenda;
 	$indek_berkas= $datpil->indek_berkas;
 	$kode		= $datpil->kode;
-	$dari		= $datpil->dari;
+	$pengirim		= $datpil->pengirim;
 	$no_surat	= $datpil->no_surat;
 	$tgl_surat	= $datpil->tgl_surat;
 
@@ -29,8 +29,8 @@ if ($mode == "edt" || $mode == "act_edt") {
         $keterangan		= $datpil->keterangan;
         $edited_by		= $datpil->edited_by;
         $status_terkirim	= $datpil->status_terkirim;
-        //$file			= $datpil->file;
-        //$pengirim		= $datpil->pengirim;
+        $file			= $datpil->file;
+        $pengirim		= $datpil->pengirim;
 
 	
 } else {
@@ -48,6 +48,7 @@ if ($mode == "edt" || $mode == "act_edt") {
         $keterangan		= "";
         $edited_by		= "";
         $status_terkirim	= "";
+		$pengirim = "";
 }
 ?>
 <div class="navbar navbar-inverse">
@@ -68,12 +69,12 @@ if ($mode == "edt" || $mode == "act_edt") {
 	<div class="col-lg-6">
 		<table  class="table-form">
 		<tr><td width="20%">No. Surat</td><td><b><input type="text" name="nomor_surat" required value="<?php echo $nomor_surat; ?>" style="width: 100px" class="form-control"></b></td></tr><tr>
-		<tr><td width="20%">Tanggal Surat</td><td><b><input type="text" name="tgl_srt" required value="<?php echo $tgl_srt; ?>" id="tgl_surat" style="width: 100px" class="form-control tgl"></b></td></tr>
-                <tr><td width="20%">Tanggal Surat Diterima</td><td><b><input type="text" name="tgl_srt_diterima" required value="<?php echo $tgl_srt_diterima; ?>" id="tgl_surat" style="width: 100px" class="form-control tgl"></b></td></tr>
-                <tr><td width="20%">Tanggal Waktu Untuk Ditindaklanjuti </td><td><b><input type="text" name="tgl_srt_dtlanjut" required value="<?php echo $tgl_srt_dtlanjut; ?>" id="tgl_surat" style="width: 100px" class="form-control tgl"></b></td></tr>
-                <tr><td width="20%">Tenggat </td><td><b><input type="checkbox" name="tenggat_wkt"  value="1" id="tgl_surata" style="width: 100px" class="form-control" <?php if($tenggat_wkt == 1){echo"checked";} ?>></b></td></tr>
-                
-                <tr><td colspan="2">
+   		<tr><td width="20%">Pengirim</td><td><b><input type="text" name="pengirim" required value="<?php echo $pengirim; ?>" style="width: 100px" class="form-control"></b></td></tr><tr>
+		<tr><td width="20%">Tanggal Surat</td><td><b><input type="text" name="tgl_srt" required value="<?php echo $tgl_srt; ?>" id="tgl_srt" style="width: 100px" class="form-control tgl"></b></td></tr>
+        <tr><td width="20%">Tanggal Surat Diterima</td><td><b><input type="text" name="tgl_srt_diterima" required value="<?php echo $tgl_srt_diterima; ?>" id="tgl_srt_diterima" style="width: 100px" class="form-control tgl"></b></td></tr>
+        <tr><td width="20%">Tanggal Waktu Untuk Ditindaklanjuti </td><td><b><input type="text" name="tgl_srt_dtlanjut" required value="<?php echo $tgl_srt_dtlanjut; ?>" id="tgl_srt_dtlanjut" style="width: 100px" class="form-control tgl"></b></td></tr>
+        <tr><td width="20%">Tenggat </td><td><b><input type="checkbox" name="tenggat_wkt"  value="1" id="tgl_surata" style="width: 100px" class="form-control" <?php if($tenggat_wkt == 1){echo"checked";} ?>></b></td></tr>
+        <tr><td colspan="2">
 		<br><button type="submit" class="btn btn-primary">Simpan</button>
 		<a href="<?=base_URL()?>admin/surat_masuk" class="btn btn-success">Kembali</a>
 		</td></tr>
