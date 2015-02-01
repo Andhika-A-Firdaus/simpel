@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2015-02-01 10:21:23
+Date: 2015-02-01 18:41:09
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -207,6 +207,40 @@ INSERT INTO `ref_klasifikasi` VALUES ('174', 'PP.06', 'PENGABDIAN', 'Surat-surat
 INSERT INTO `ref_klasifikasi` VALUES ('175', 'PP.07', 'PERIZINAN', 'Surat-surat   yang   menyangkut   masalah   perizinan   belajar/mengajar   bagi lembaga/instasi/orang Indonesia ke luar negeri.');
 
 -- ----------------------------
+-- Table structure for `tr_disposisi_instruksi`
+-- ----------------------------
+DROP TABLE IF EXISTS `tr_disposisi_instruksi`;
+CREATE TABLE `tr_disposisi_instruksi` (
+  `id_disposisi` bigint(20) DEFAULT NULL,
+  `id_instruksi` int(11) DEFAULT NULL,
+  KEY `id_disposisi_fk2` (`id_disposisi`),
+  KEY `id_instruksi_fk` (`id_instruksi`),
+  CONSTRAINT `id_disposisi_fk2` FOREIGN KEY (`id_disposisi`) REFERENCES `t_disposisi` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `id_instruksi_fk` FOREIGN KEY (`id_instruksi`) REFERENCES `t_instruksi` (`id_instruksi`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of tr_disposisi_instruksi
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `tr_disposisi_unit_terusan`
+-- ----------------------------
+DROP TABLE IF EXISTS `tr_disposisi_unit_terusan`;
+CREATE TABLE `tr_disposisi_unit_terusan` (
+  `id_unit_terusan` int(11) DEFAULT NULL,
+  `id_disposisi` bigint(20) DEFAULT NULL,
+  KEY `id_unit_terusan_fk` (`id_unit_terusan`),
+  KEY `id_disposisi_fk` (`id_disposisi`),
+  CONSTRAINT `id_disposisi_fk` FOREIGN KEY (`id_disposisi`) REFERENCES `t_disposisi` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `id_unit_terusan_fk` FOREIGN KEY (`id_unit_terusan`) REFERENCES `t_unit_terusan` (`id_diteruskan`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of tr_disposisi_unit_terusan
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `tr_instansi`
 -- ----------------------------
 DROP TABLE IF EXISTS `tr_instansi`;
@@ -250,7 +284,7 @@ INSERT INTO `t_admin` VALUES ('2', 'umum', 'adfab9c56b8b16d6c067f8d3cff8818e', '
 -- ----------------------------
 DROP TABLE IF EXISTS `t_disposisi`;
 CREATE TABLE `t_disposisi` (
-  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `id` bigint(6) NOT NULL AUTO_INCREMENT,
   `id_surat` int(6) NOT NULL,
   `kpd_yth` varchar(250) NOT NULL,
   `isi_disposisi` varchar(250) NOT NULL,
@@ -258,13 +292,15 @@ CREATE TABLE `t_disposisi` (
   `batas_waktu` date NOT NULL,
   `catatan` varchar(250) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of t_disposisi
 -- ----------------------------
 INSERT INTO `t_disposisi` VALUES ('1', '1', 'Sekretaris', 'tes disposisi', 'Perlu Perhatian Khusus', '2015-02-09', 'yg bener ya');
 INSERT INTO `t_disposisi` VALUES ('2', '1', 'Manajer', 'dsdsdsdsd', 'Perhatian Batas Waktu', '2015-01-31', 'aaa');
+INSERT INTO `t_disposisi` VALUES ('3', '2', 'tuh', 'isi', 'Biasa', '0000-00-00', 'catat');
+INSERT INTO `t_disposisi` VALUES ('4', '2', 'td', 'id', 'Perlu Perhatian Khusus', '0000-00-00', 'apapun');
 
 -- ----------------------------
 -- Table structure for `t_form_disposisi`
@@ -273,26 +309,22 @@ DROP TABLE IF EXISTS `t_form_disposisi`;
 CREATE TABLE `t_form_disposisi` (
   `id` bigint(11) NOT NULL DEFAULT '0',
   `id_surat` bigint(11) DEFAULT NULL,
-  `id_diteruskan` int(11) DEFAULT NULL,
   `kasubbag` char(255) DEFAULT NULL,
-  `id_instruksi` int(11) DEFAULT NULL,
   `catatan` char(255) DEFAULT NULL,
-  `tgl_skrtrs_kbl` date DEFAULT NULL,
-  `tgl_unit_terima` date DEFAULT NULL,
-  `tgl_unit_sls` date DEFAULT NULL,
+  `tgl_disposisi` date DEFAULT NULL,
+  `pengirim` int(11) DEFAULT NULL,
+  `id_parent` bigint(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_surat_fk` (`id_surat`) USING BTREE,
-  KEY `id_instruksi_fk` (`id_instruksi`),
-  KEY `id_diteruskan_fk` (`id_diteruskan`),
-  CONSTRAINT `id_diteruskan_fk` FOREIGN KEY (`id_diteruskan`) REFERENCES `t_unit_terusan` (`id_diteruskan`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `id_instruksi_fk` FOREIGN KEY (`id_instruksi`) REFERENCES `t_instruksi` (`id_instruksi`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `id_surat_fk` FOREIGN KEY (`id_surat`) REFERENCES `t_surat_msk` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `pengirim_fk` (`pengirim`),
+  CONSTRAINT `id_surat_fk` FOREIGN KEY (`id_surat`) REFERENCES `t_surat_msk` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `pengirim_fk` FOREIGN KEY (`pengirim`) REFERENCES `t_admin` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of t_form_disposisi
 -- ----------------------------
-INSERT INTO `t_form_disposisi` VALUES ('1', null, null, null, null, null, null, null, null);
+INSERT INTO `t_form_disposisi` VALUES ('1', null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `t_instruksi`
@@ -433,13 +465,14 @@ CREATE TABLE `t_surat_msk` (
   CONSTRAINT `jenis_surat_fk` FOREIGN KEY (`jenis_surat`) REFERENCES `t_jenis_surat_masuk` (`id_jns`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `unit_tujuan_fk` FOREIGN KEY (`unit_tujuan`) REFERENCES `t_unit_tujuan` (`id_unit`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `user_fk` FOREIGN KEY (`edited_by`) REFERENCES `t_admin` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of t_surat_msk
 -- ----------------------------
-INSERT INTO `t_surat_msk` VALUES ('2', 'BAAA1', '0000-00-00', '2015-01-28', '2015-01-29', '0', 'Testimoni', '1', '667', '1', 'jkkljhlkjhlkhl', '1', '', null, '');
-INSERT INTO `t_surat_msk` VALUES ('4', '123', '0000-00-00', '2015-02-19', '2015-02-04', '1', 'per', '1', '0', '2', 'ket', '1', '', '10666083_1485349628381481_913245954_a.jpg', '');
+INSERT INTO `t_surat_msk` VALUES ('2', 'BAAA1', '2015-02-24', '2015-01-28', '2015-01-29', '0', 'Testimoni', '2', '667', '2', 'jkkljhlkjhlkhl', '1', '', null, 'Junno');
+INSERT INTO `t_surat_msk` VALUES ('4', '123', '0000-00-00', '2015-02-19', '2015-02-04', '1', 'per', '1', '0', '2', 'ket', '1', '', '10666083_1485349628381481_913245954_a.jpg', 'Tantra');
+INSERT INTO `t_surat_msk` VALUES ('5', '1234', '0000-00-00', '2015-02-24', '2015-02-26', '0', 'hal', '2', '1', '2', 'ket', '1', '', null, 'Saya');
 
 -- ----------------------------
 -- Table structure for `t_unit_terusan`
@@ -454,6 +487,10 @@ CREATE TABLE `t_unit_terusan` (
 -- ----------------------------
 -- Records of t_unit_terusan
 -- ----------------------------
+INSERT INTO `t_unit_terusan` VALUES ('1', 'TU Pimpinan');
+INSERT INTO `t_unit_terusan` VALUES ('2', 'Rumah Tangga');
+INSERT INTO `t_unit_terusan` VALUES ('3', 'Perlengkapan');
+INSERT INTO `t_unit_terusan` VALUES ('4', 'TU dan Persuratan');
 
 -- ----------------------------
 -- Table structure for `t_unit_tujuan`
