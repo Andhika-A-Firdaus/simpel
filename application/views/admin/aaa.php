@@ -70,7 +70,7 @@
 		
 		
 		$(function() {
-			$( "#tgl_surat" ).datepicker({
+			$( ".tgl" ).datepicker({
 				changeMonth: true,
 				changeYear: true,
 				dateFormat: 'yy-mm-dd'

@@ -68,7 +68,10 @@
 			foreach ($data as $b) {
 		?>
 		<tr>
-			<td><?php echo $b->no_agenda."<br><b>File : </b><i><a href='".base_URL()."upload/surat_masuk/".$b->file."' target='_blank'>".$b->file."</a>";?></td>
+			<td>
+                            <?php echo $b->no_agenda ?>
+                            <?php if($b->file != null) { echo "<br><b>File : </b><i><a href='".base_URL()."upload/surat_masuk/".$b->file."' target='_blank'>Lihat file</a>"; }?>
+                        </td>
 			<td><?=$b->nomor_surat."<br>".tgl_jam_sql($b->tgl_srt)?></td>
 			<td><?=$b->pengirim."<br>".$b->perihal?></td>
                         <td><?=tgl_jam_sql($b->tgl_srt_diterima)."<br>".tgl_jam_sql($b->tgl_srt_dtlanjut)?></td>

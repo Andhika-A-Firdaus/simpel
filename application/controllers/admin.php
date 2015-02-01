@@ -22,7 +22,7 @@ class Admin extends CI_Controller {
 		
 		/* pagination */	
 		$total_row		= $this->db->query("SELECT * FROM ref_klasifikasi")->num_rows();
-		$per_page		= 2     ;
+		$per_page		= 10     ;
 		
 		$awal	= $this->uri->segment(4); 
 		$awal	= (empty($awal)) ? 0 : $awal;
@@ -73,7 +73,7 @@ class Admin extends CI_Controller {
 		
 		/* pagination */	
 		$total_row		= $this->db->query("SELECT * FROM t_surat_msk")->num_rows();
-		$per_page		= 1;
+		$per_page		= 10;
 		
 		$awal	= $this->uri->segment(4); 
 		$awal	= (empty($awal)) ? 0 : $awal;
@@ -126,8 +126,12 @@ class Admin extends CI_Controller {
 			$a['page']		= "l_surat_masuk";
 		} else if ($mau_ke == "add") {
 			$a['page']		= "f_surat_masuk";
+                        $a['data_jenis']        = $this->db->query("SELECT * FROM t_jenis_surat_masuk")->result();
+                        $a['data_unit']        = $this->db->query("SELECT * FROM t_unit_tujuan")->result();
 		} else if ($mau_ke == "edt") {
-			$a['datpil']	= $this->db->query("SELECT * FROM t_surat_msk WHERE id = '$idu'")->row();	
+			$a['datpil']	= $this->db->query("SELECT * FROM t_surat_msk WHERE id = '$idu'")->row();
+                        $a['data_jenis']        = $this->db->query("SELECT * FROM t_jenis_surat_masuk")->result();	
+                        $a['data_unit']        = $this->db->query("SELECT * FROM t_unit_tujuan")->result();
 			$a['page']		= "f_surat_masuk";
 		} else if ($mau_ke == "act_add") {	
 			if ($this->upload->do_upload('file_surat')) {
@@ -524,8 +528,8 @@ class Admin extends CI_Controller {
 	public function disposisi_cetak() {
 		$idu = $this->uri->segment(3);
 		$a['datpil1']	= $this->db->query("SELECT * FROM t_surat_masuk WHERE id = '$idu'")->row();	
-		$a['datpil2']	= $this->db->query("SELECT * FROM t_disposisi WHERE id = '$idu'")->result();
-                $a['datpil3']	= $this->db->query("SELECT * FROM t_disposisi WHERE id = '$idu'")->row();
+		$a['datpil2']	= $this->db->query("SELECT * FROM t_disposisi WHERE id = '$idu'")->result();	
+		$a['datpil3']	= $this->db->query("SELECT * FROM t_disposisi WHERE id = '$idu'")->row();	
 		$this->load->view('admin/f_disposisi', $a);
 	}
 	
